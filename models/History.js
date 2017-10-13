@@ -10,6 +10,9 @@ var HistorySchema = new Schema({
   },
   date: {
     type: Date
+  },
+  dateSaved: {
+  	type: Date
   }
 });
 

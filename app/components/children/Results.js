@@ -25,8 +25,9 @@ var Results = React.createClass({
             this.props.results.map((search, i) => {
             return ( 
               <div>
-                <p key={i}>{search.snippet}
-                    <button className="btn-default saveButton" value={i} onClick={this.handleSave}>Save</button>
+                <p key={i}>
+                  <a href={search.web_url} target="_blank">{search.snippet}</a>
+                  <button className="btn-default saveButton" value={i} onClick={this.handleSave}>Save</button>
                 </p>
                 <hr className="line"/> 
               </div>

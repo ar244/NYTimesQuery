@@ -17,7 +17,7 @@ var History = React.createClass({
             this.props.history.map(function(search, i) {
               return (
                 <div> 
-                  <p key={i}>{search.topic} - {search.date}</p>
+                  <p key={i}><a href={search.url} target="_blank">{search.topic}</a> - {search.date}</p>
                   <hr className="line"/> 
                 </div>
               );

@@ -24,7 +24,7 @@ app.use(express.static("public"));
 // -------------------------------------------------
 
 // MongoDB Configuration configuration (Change this URL to your own DB)
-mongoose.connect("mongodb://127.0.0.1:27017/nytreact");
+mongoose.connect("mongodb://heroku_wsl4kwct:1tdue2s77s4noj3hhp6d2sprdk@ds119585.mlab.com:19585/heroku_wsl4kwct");
 var db = mongoose.connection;
 
 db.on("error", function(err) {
@@ -48,7 +48,7 @@ app.get("/api", function(req, res) {
 
   // We will find all the records, sort it in descending order, then limit the records to 5
   History.find({}).sort([
-    ["date", "descending"]
+    ["dateSaved", "descending"]
   ]).limit(5).exec(function(err, doc) {
     if (err) {
       console.log(err);
@@ -64,21 +64,24 @@ app.post("/api", function(req, res) {
   console.log("here");
   console.log("BODY: " + req.body.topic);
 
-  // Here we'll save the location based on the JSON input.
+  // Here we'll save the article based on the JSON input.
   // We'll use Date.now() to always get the current date time
-  History.create({
+  var history = new History({
     topic: req.body.topic,
     date: req.body.date,
-    url: req.body.url
-
-  }, function(err) {
-    if (err) {
-      console.log(err);
-    }
-    else {
-      res.send("Saved Search");
-    }
+    url: req.body.url,
+    dateSaved: Date.now()
   });
+
+  history.save(function(err, doc) {
+        if(err) { 
+          console.log(err);
+        } else {
+          res.send("Saved Search");
+        }
+
+    });
+  
 });
 
 // -------------------------------------------------
